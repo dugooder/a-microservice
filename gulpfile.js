@@ -80,16 +80,14 @@ gulp.task('compile', function () {
 });
 
 gulp.task('test', ['compile'], function () {
-       console.log(colors.yellow('!!!!!! Tests not being executed !!!!!'));
-// No testing projects yet
-//    return gulp.src(['**/bin/**/*.tests.dll'], { read: false })
-//        .pipe(xunit({
-//            executable: 'src/packages/xunit.runner.console.2.1.0/tools/xunit.console.exe',
-//            options: {
-//                nologo: true,
-//                html: buildFolder + 'test_results.html'
-//            }
-//        }));
+   return gulp.src(['**/bin/**/*.tests.dll'], { read: false })
+       .pipe(xunit({
+           executable: 'src/packages/xunit.runner.console.2.1.0/tools/xunit.console.exe',
+           options: {
+               nologo: true,
+               html: buildFolder + 'test_results.html'
+           }
+       }));
 });
 
 gulp.task('package', function () {
