@@ -1,5 +1,7 @@
 # a-microservice Template by Dugooder 
 
+`Not ready for use. Under development` 
+
 ##Usage
 Use this application as a template for creating micro-service.  
 

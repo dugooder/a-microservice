@@ -1,0 +1,34 @@
+{
+  "name": "amicroservice",
+  "version": "1.0.0",
+  "title": "a Microservice Template",
+  "description": "Template solution for a microservice",
+  "company": "Chaotic Good",
+  "product": "amicroservice template project",
+  "copyright": "None",
+  "license": "MIT",
+  "trademark": "Chaotic Good",
+  "culture": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dugooder/a-microservice.git"
+  },
+  "devDependencies": {
+    "colors": "^1.1.2",
+    "del": "^2.2.0",
+    "fs": "0.0.2",
+    "gulp": "^3.9.0",
+    "gulp-dotnet-assembly-info": "^0.1.11",
+    "gulp-flatten": "^0.2.0",
+    "gulp-msbuild": "^0.2.19",
+    "gulp-run-sequence": "^0.3.2",
+    "gulp-shell": "^0.5.2",
+    "gulp-xunit-runner": "^0.1.1",
+    "request": "^2.67.0",
+    "yargs": "^3.32.0"
+  },
+  "scripts": {
+    "build": "gulp build",
+    "test": "gulp test"
+  }
+}
