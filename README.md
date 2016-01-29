@@ -1,7 +1,21 @@
-# a-microservice Template by Dugooder 
+###aMicroService Solution Template
 
-`Not ready for use. Under development` 
+####What is it?
+---
+This project is a template to create a microservice using C#.
 
-Use this application as a template for creating a microservice.  
+####Documentation
+---
+See the [Wiki](https://github.com/dugooder/a-microservice/wiki/) for more information. 
 
-See the [Wiki](https://github.com/dugooder/a-microservice/wiki) for more information
+####Building
+---
+See the [build page](https://github.com/dugooder/a-microservice/wiki/Build) for instructions.
+
+####Licensing
+---
+Please see the file ``license.txt``
+
+####Contacts
+---
+See my [GitHub profile](https://github.com/dugooder) for my contact information.
