@@ -50,6 +50,5 @@ namespace tests
 
         // We are not testing log4net just our code so the below are being developed
         // public void PushContextInfoTest() {} 
-        // public void PopContextInfoTest() { }
     }
 }

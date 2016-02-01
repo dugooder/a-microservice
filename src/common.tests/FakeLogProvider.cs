@@ -1,4 +1,5 @@
 ﻿using common;
+using tests;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -42,17 +43,8 @@ namespace tests
 
             return result;
         }
-
-        public void PopContextInfo()
-        {
-            if (ContextInfo != null)
-            {
-                ContextInfo.Pop();
-            }
-            testOutput.WriteLine("PopContextInfo()");
-        }
-
-        public void PushContextInfo(string info)
+        
+        public IDisposable PushContextInfo(string info)
         {
             if (ContextInfo == null)
             {
@@ -60,6 +52,7 @@ namespace tests
             }
             ContextInfo.Push(info);
             testOutput.WriteLine("PushContextInfo(info='{0};)", info);
+            return new FakeDisposableClass();
         }
 
         public void Reset()

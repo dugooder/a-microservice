@@ -13,44 +13,33 @@ namespace service.health
         public HealthServiceNancyModule(ILogProvider log) : base("/health")
         {
             this.log = log;
-            
-            Before += ctx => {
-                log.PushContextInfo("HealthService");
 
-                log.WithLogLevel(LogLevel.Information)
-                    .WriteMessage(this.Context.Request.Url.ToString());
-
-                return null;
-            };
-
-            After += ctx =>
+            Get["/"] = parameters =>
             {
-                log.PopContextInfo();
-            };
-            
-            Get["/"] = parameters => {
-                try
+                using (log.PushContextInfo("healthcheck"))
                 {
-                    ApplicationHealth appHealth = new ApplicationHealth(log);
-
-                    if (appHealth.IsHealthy())
+                    try
+                    {
+                        ApplicationHealth appHealth = new ApplicationHealth(log);
+                        if (appHealth.IsHealthy())
+                        {
+                            return Response
+                                .AsText("OK")
+                                .WithStatusCode(HttpStatusCode.OK);
+                        }
+                        else
+                        {
+                            return Response
+                                .AsText("Not Healthy")
+                                .WithStatusCode(HttpStatusCode.ServiceUnavailable);
+                        }
+                    }
+                    catch (Exception e)
                     {
                         return Response
-                            .AsText("OK")
-                            .WithStatusCode(HttpStatusCode.OK);
+                            .AsText(e.Message)
+                            .WithStatusCode(HttpStatusCode.InternalServerError);
                     }
-                    else
-                    {
-                        return Response
-                            .AsText("Not Healthy")
-                            .WithStatusCode(HttpStatusCode.ServiceUnavailable);
-                    }
-                }
-                catch (Exception e)
-                {
-                    return Response
-                        .AsText(e.Message)
-                        .WithStatusCode(HttpStatusCode.InternalServerError);
                 }
             };
         }

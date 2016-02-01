@@ -22,9 +22,7 @@ namespace common
 
         void Reset();
 
-        void PushContextInfo(string info);
-
-        void PopContextInfo();
+        IDisposable PushContextInfo(string info);
 
         void Write(string logName, LogLevel level, object message, Exception ex);
     }

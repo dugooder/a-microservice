@@ -1,24 +1,27 @@
 ﻿using System;
+using common;
 using Nancy.Hosting.Self;
+using Ninject;
 
 namespace service
 {
     public sealed class WindowsService : IDisposable
     {
-        public const string UrlMask = "http://localhost:{0}";
-
-        readonly int port;
+        readonly Uri uri;
+        readonly ILogProvider log;
 
         NancyHost host;
         Bootstrapper bootStrapper;
         
-        public WindowsService(int port)
+        [Inject]
+        public WindowsService(ILogProvider log, Uri uri)
         {
-            this.port = port;
+            this.log = log;
+            this.uri = uri;
         }
 
         public bool Start()
-        {
+        { 
             if (host == null)
             {
                 HostConfiguration config = new HostConfiguration();
@@ -27,12 +30,17 @@ namespace service
 
                 bootStrapper = new Bootstrapper();
 
-                host = new NancyHost(bootStrapper, config,
-                    new Uri(string.Format(UrlMask, port)));
+                host = new NancyHost(bootStrapper, config, uri);
             }
 
             host.Start();
 
+            log.WithLogLevel(LogLevel.Information)
+                 .WriteMessage("Started Host on {0}", uri.ToString());
+
+#if DEBUG
+            System.Diagnostics.Process.Start(uri.ToString());
+#endif
             return true;
         }
 
@@ -43,6 +51,9 @@ namespace service
                 host.Stop();
             }
 
+            log.WithLogLevel(LogLevel.Information)
+                .WriteMessage("Stopping Host");
+
             return true;
         }
 
@@ -52,12 +63,17 @@ namespace service
             {
                 host.Dispose();
                 host = null;
+                log.WithLogLevel(LogLevel.Debug)
+                    .WriteMessage("Host Dispossed");
+
             }
 
             if (bootStrapper != null)
             {
                 bootStrapper.Dispose();
                 bootStrapper = null;
+                log.WithLogLevel(LogLevel.Debug)
+                    .WriteMessage("Bootstrapper Dispossed");
             }
         }
 
