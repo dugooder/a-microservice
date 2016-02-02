@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle("a Microservice Template")]
 [assembly: AssemblyDescription("Template solution for a microservice")]
-[assembly: AssemblyConfiguration("Debug")]
+[assembly: AssemblyConfiguration("Release")]
 [assembly: AssemblyCompany("Chaotic Good")]
 [assembly: AssemblyProduct("amicroservice template project")]
 [assembly: AssemblyCopyright("Chaotic Good 2016")]

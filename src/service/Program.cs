@@ -17,7 +17,7 @@ namespace service
             using (IKernel k = new StandardKernel())
             {
                 k.Load(new common.CommonNinjectModule());
-                k.Bind<WindowsService>().To(typeof(WindowsService)).InSingletonScope();
+                k.Bind<Service>().To(typeof(Service)).InSingletonScope();
 
                 var host = HostFactory.New(x =>
                 {
@@ -28,10 +28,10 @@ namespace service
 
                     UriBuilder urlBuilder = new UriBuilder(schema, domain, portNumber);
 
-                    using (WindowsService svc = k.Get<WindowsService>(
+                    using (Service svc = k.Get<Service>(
                         new ConstructorArgument("uri", urlBuilder.Uri)))
                     {
-                        x.Service<WindowsService>(s =>
+                        x.Service<Service>(s =>
                         {
                             s.ConstructUsing(settings => svc);
                             s.WhenStarted(service => service.Start());
@@ -48,6 +48,7 @@ namespace service
                 });
 
                 host.Run();
+
             }
         }
     }

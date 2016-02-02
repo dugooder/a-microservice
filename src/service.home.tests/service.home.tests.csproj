@@ -5,11 +5,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B3A9979C-E75D-478D-B28F-416B120538F1}</ProjectGuid>
+    <ProjectGuid>{4C22F6E8-EB56-4014-BB40-7D939FE94007}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>service.health.tests</RootNamespace>
-    <AssemblyName>amicroservice.service.health.tests</AssemblyName>
+    <RootNamespace>service.home.tests</RootNamespace>
+    <AssemblyName>service.home.tests</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
@@ -34,6 +34,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CsQuery, Version=1.3.3.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CsQuery.1.3.3\lib\net40\CsQuery.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Nancy, Version=1.4.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nancy.1.4.1\lib\net40\Nancy.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Nancy.Testing, Version=1.4.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nancy.Testing.1.4.1\lib\net40\Nancy.Testing.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
       <Private>True</Private>
@@ -68,7 +80,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationHealthTests.cs" />
+    <Compile Include="HomeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -81,14 +93,6 @@
     <ProjectReference Include="..\common.tests\common.tests.csproj">
       <Project>{30cb58c7-bf2b-472f-964a-f7b220ce6520}</Project>
       <Name>common.tests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\common\common.csproj">
-      <Project>{22fb3b3f-5847-4538-9e7a-ef9734aaea59}</Project>
-      <Name>common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\service.health\service.health.csproj">
-      <Project>{1a1e973e-bdcf-4aac-886f-18a8cd39bc90}</Project>
-      <Name>service.health</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

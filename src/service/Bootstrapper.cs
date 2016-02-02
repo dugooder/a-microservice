@@ -12,7 +12,7 @@ namespace service
         public static string DLLSwithNinjectModulesToLoadMask = "amicroservice*.dll";
 
         ILogProvider log;
-
+        
         protected override void ConfigureApplicationContainer(IKernel existingContainer)
         {
             existingContainer.Load(DLLSwithNinjectModulesToLoadMask);
@@ -25,6 +25,7 @@ namespace service
 #if !DEBUG
             DiagnosticsHook.Disable(pipelines);
 #endif
+
             base.ApplicationStartup(container, pipelines);
         }
 
@@ -40,31 +41,24 @@ namespace service
         {
             pipelines.BeforeRequest.AddItemToStartOfPipeline(ctx =>
             {
-                if (!ctx.Request.Url.Path.Contains("/Content"))
-                {
-                    log.WithLogLevel(LogLevel.Information)
-                        .WriteMessage(ctx.Request.Url.ToString());
-                }
+                log.WithLogLevel(LogLevel.Information)
+                    .WriteMessage(ctx.Request.Url.ToString());
                 return null;
             });
 
             pipelines.AfterRequest.AddItemToEndOfPipeline(ctx =>
             {
-                if (!ctx.Request.Url.Path.Contains("/Content"))
-                {
-                    log.WithLogLevel(LogLevel.Information)
-                        .WriteMessage("Response.StatusCode:{0}", ctx.Response.StatusCode);
-                }
+                log.WithLogLevel(LogLevel.Information)
+                    .WriteMessage("Response.StatusCode:{0}", ctx.Response.StatusCode);
             });
 
-            pipelines.OnError += (ctx, ex) => {
+            pipelines.OnError += (ctx, ex) =>
+            {
                 log.WithLogLevel(LogLevel.Error).WriteGeneralException(ex);
                 return null;
             };
 
             base.RequestStartup(container, pipelines, context);
         }
-
-
     }
 }

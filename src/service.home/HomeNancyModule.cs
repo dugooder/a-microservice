@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Nancy;
 using Ninject;
 using common;
+using Nancy.Responses;
+
 namespace service.home
 {
     public class HomeNancyModule : NancyModule
@@ -21,20 +23,17 @@ namespace service.home
             {
                 Get["/"] = parameters =>
                 {
-                    try
-                    {
-                        return Response
-                            .AsText("OK")
-                            .WithStatusCode(HttpStatusCode.OK);
-                    }
-                    catch (Exception e)
-                    {
-                        return Response
-                            .AsText(e.Message)
-                            .WithStatusCode(HttpStatusCode.InternalServerError);
-                    }
+                    return View["index"];
+                };
+
+                Get["/humans"] = parameters =>
+                {
+                    var response = new GenericFileResponse("content/humans.txt", "text/text");
+                    return response.WithStatusCode(HttpStatusCode.OK);
                 };
             }
+
+
         }
     }
 }
