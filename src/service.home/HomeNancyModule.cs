@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Nancy;
+﻿using Nancy;
 using Ninject;
 using common;
 using Nancy.Responses;
@@ -23,20 +18,16 @@ namespace service.home
             {
                 Get["/"] = parameters =>
                 {
-                    //return Response.AsText("AOK").WithStatusCode(HttpStatusCode.OK);
                     return View["index"];
                 };
 
                 Get["/humans"] = parameters =>
                 {
-                    var response = new GenericFileResponse("content/humans.txt", "text/plain");
+                    var response = new 
+                        GenericFileResponse("content/humans.txt", "text/plain");
                     return response.WithStatusCode(HttpStatusCode.OK);
                 };
-
-
             }
-
-
         }
     }
 }

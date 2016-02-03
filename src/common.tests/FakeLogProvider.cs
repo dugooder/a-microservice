@@ -55,12 +55,32 @@ namespace tests
             {
                 ContextInfo = new Stack();
             }
+
             ContextInfo.Push(info);
+
             if (this.DetailedOutput)
             {
                 testOutput.WriteLine("PushContextInfo(info='{0};)", info);
             }
+
             return new FakeDisposableClass();
+        }
+
+        public string PopContextInfo()
+        {
+            if (ContextInfo == null)
+            {
+                return null;
+            }
+            
+            string result = ContextInfo.Pop() as string;
+
+            if (this.DetailedOutput)
+            {
+                testOutput.WriteLine("PopContextInfo()", result);
+            }
+
+            return result;
         }
 
         public void Reset()

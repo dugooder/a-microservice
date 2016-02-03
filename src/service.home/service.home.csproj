@@ -72,29 +72,11 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <Content Include="content\.editorconfig">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="content\.htaccess">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <None Include="views\doc\css.md" />
-    <None Include="views\doc\extend.md" />
-    <None Include="views\doc\faq.md" />
-    <None Include="views\doc\html.md" />
-    <None Include="views\doc\js.md" />
-    <None Include="views\doc\misc.md" />
-    <None Include="views\doc\TOC.md" />
-    <None Include="views\doc\usage.md" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Content Include="content\.gitattributes">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="content\.gitignore">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Folder Include="content\img\" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="content\404.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -110,7 +92,6 @@
     <Content Include="content\humans.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="content\img\.gitignore" />
     <Content Include="views\index.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

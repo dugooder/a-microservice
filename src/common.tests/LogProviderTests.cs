@@ -1,5 +1,6 @@
 ﻿using common;
 using Ninject;
+using Shouldly;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -49,7 +50,27 @@ namespace tests
             Assert.Equal("red", logger.Properties["color"]);
         }
 
-        // We are not testing log4net just our code so the below are being developed
-        // public void PushContextInfoTest() {} 
+       [Fact()]
+       public void LogContextTest()
+        {
+            logger.PopContextInfo().ShouldBeEmpty();
+            logger.PushContextInfo("LogContextTest").ShouldNotBeNull();
+            logger.WriteMessage("LogContextTest message");
+            logger.PopContextInfo().ShouldBe("LogContextTest");
+            logger.PopContextInfo().ShouldBeEmpty();
+        }
+
+        [Fact()]
+        public void LogContextUsingTest()
+        {
+            logger.PopContextInfo().ShouldBeEmpty();
+            using (IDisposable logCt = logger.PushContextInfo("LogContextUsingTest"))
+            {
+                logger.WriteMessage("LogContextUsingTest message");
+                logger.PopContextInfo().ShouldBe("LogContextUsingTest");
+            }
+            
+            logger.PopContextInfo().ShouldBeEmpty();
+        }
     }
 }

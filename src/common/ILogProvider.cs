@@ -24,6 +24,8 @@ namespace common
 
         IDisposable PushContextInfo(string info);
 
+        string PopContextInfo();
+
         void Write(string logName, LogLevel level, object message, Exception ex);
     }
 }

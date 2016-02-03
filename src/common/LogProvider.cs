@@ -58,12 +58,23 @@ namespace common
             return this;
         }
 
+        /// <summary>
+        ///Log Context Usage:  
+        /// 1.  using (IDisposable logctx = log.PushContextInfo("message here") { }
+        /// 2.  Call Push() then Pop().
+        ///</summary>
+        /// <param name="info">any text you want to appear in the NDC property of the log</param>
+        /// <returns>An object allowing the user of the 'using' statement to enforce poping the value off the context stack. Not the normal IDisposale usage; not about releasing memory</returns>
         public IDisposable PushContextInfo(string info)
         {
-            //Usage:  using (log.PushContextInfo("message here") {  .. do stuff here... }
             return log4net.NDC.Push(info);
         }
-        
+
+        public string PopContextInfo()
+        {
+            return log4net.NDC.Pop();
+        }
+
         public void Write(string logName, LogLevel level, object message, Exception ex)
         {
             ILog logger = getLogger(logName);
