@@ -1,5 +1,7 @@
 ###aMicroService Solution Template
 
+[![Build status](https://ci.appveyor.com/api/projects/status/guwi68ypx6i2bue8?svg=true)](https://ci.appveyor.com/project/dugooder/a-microservice)
+
 ####What is it?
 ---
 This project is a template to create a microservice using C#.
