@@ -14,35 +14,44 @@ namespace service.health
         {
             this.log = log;
 
-            Get["/"] = parameters =>
+            using (log.PushContextInfo("healthcheck"))
             {
-                using (log.PushContextInfo("healthcheck"))
+                //ie. http://localhost:9000/health/details
+                Get["/details"] = parameters =>
+            {
+                ApplicationHealth appHealth = new ApplicationHealth(log);
+                return View["details", appHealth];
+
+            };
+
+                Get["/"] = parameters =>
                 {
+
                     try
                     {
                         ApplicationHealth appHealth = new ApplicationHealth(log);
                         if (appHealth.IsHealthy())
                         {
                             return Response
-                                .AsText("OK")
-                                .WithStatusCode(HttpStatusCode.OK);
+                            .AsText("OK")
+                            .WithStatusCode(HttpStatusCode.OK);
                         }
                         else
                         {
                             return Response
-                                .AsText("Not Healthy")
-                                .WithStatusCode(HttpStatusCode.ServiceUnavailable);
+                            .AsText("Not Healthy")
+                            .WithStatusCode(HttpStatusCode.ServiceUnavailable);
                         }
                     }
                     catch (Exception e)
                     {
                         return Response
-                            .AsText(e.Message)
-                            .WithStatusCode(HttpStatusCode.InternalServerError);
+                        .AsText(e.Message)
+                        .WithStatusCode(HttpStatusCode.InternalServerError);
                     }
-                }
-            };
-        }
+                };
+            }
 
+        }
     }
 }

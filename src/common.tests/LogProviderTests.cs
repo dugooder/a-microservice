@@ -14,6 +14,7 @@ namespace tests
 
         public LogProviderTests(ITestOutputHelper outputHelper) : base(outputHelper)
         {
+            this.FakeLogger.DetailedOutput = true;
             logger = Kernel.Get<ILogProvider>();
         }
 

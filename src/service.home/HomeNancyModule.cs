@@ -23,14 +23,17 @@ namespace service.home
             {
                 Get["/"] = parameters =>
                 {
+                    //return Response.AsText("AOK").WithStatusCode(HttpStatusCode.OK);
                     return View["index"];
                 };
 
                 Get["/humans"] = parameters =>
                 {
-                    var response = new GenericFileResponse("content/humans.txt", "text/text");
+                    var response = new GenericFileResponse("content/humans.txt", "text/plain");
                     return response.WithStatusCode(HttpStatusCode.OK);
                 };
+
+
             }
 
 

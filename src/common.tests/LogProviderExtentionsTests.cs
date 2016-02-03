@@ -8,7 +8,9 @@ namespace tests
     public class LogProviderExtentionsTests : BaseTest
     {
         public LogProviderExtentionsTests(ITestOutputHelper output) 
-            : base(output) { }
+            : base(output) {
+            this.FakeLogger.DetailedOutput = true;
+        }
 
         [Fact]
         public void LogLevelTest()

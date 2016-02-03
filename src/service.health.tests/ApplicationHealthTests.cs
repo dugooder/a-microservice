@@ -15,5 +15,12 @@ namespace service.health.tests
             ApplicationHealth appHealth = new ApplicationHealth(this.FakeLogger);
             appHealth.IsHealthy().ShouldBe(true);
         }
+
+        [Fact]
+        public void HealthStatusTest()
+        {
+            ApplicationHealth appHealth = new ApplicationHealth(this.FakeLogger);
+            appHealth.Status.ShouldBe("Bien");
+        }
     }
 }

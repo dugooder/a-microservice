@@ -16,5 +16,14 @@ namespace service.health
             //TODO: Implement Health Check
             return true;
         }
+
+        public string Status
+        {
+            get
+            {
+                return this.IsHealthy() ? "Bien" : "Muy mal";
+
+            }
+        }
     }
 }

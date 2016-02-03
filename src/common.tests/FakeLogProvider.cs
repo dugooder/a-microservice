@@ -17,9 +17,11 @@ namespace tests
         public int ExceptionCount { get; private set; }
         public bool Errors { get; private set; }
         public bool Warnings { get; private set; }
+        public bool DetailedOutput { get; set; }
 
         public FakeLogProvider(ITestOutputHelper testOutputHelper)
         {
+            this.DetailedOutput = false;
             this.testOutput = testOutputHelper;
             props = new Dictionary<string, object>();
         }
@@ -36,10 +38,13 @@ namespace tests
         {
             object result = props.ContainsKey(name) ? 
                 props[name] :  defaultValue;
-            
-            testOutput.WriteLine(
-                "GetPropertyValue(name='{0}', defaultValue='{1}') = result='{2}'",
-                name, defaultValue, result);
+
+            if (this.DetailedOutput)
+            {
+                testOutput.WriteLine(
+                    "GetPropertyValue(name='{0}', defaultValue='{1}') = result='{2}'",
+                    name, defaultValue, result);
+            }
 
             return result;
         }
@@ -51,7 +56,10 @@ namespace tests
                 ContextInfo = new Stack();
             }
             ContextInfo.Push(info);
-            testOutput.WriteLine("PushContextInfo(info='{0};)", info);
+            if (this.DetailedOutput)
+            {
+                testOutput.WriteLine("PushContextInfo(info='{0};)", info);
+            }
             return new FakeDisposableClass();
         }
 
@@ -62,13 +70,19 @@ namespace tests
             Errors = false;
             Warnings = false;
             props.Clear();
-            testOutput.WriteLine("Reset()");
+            if (this.DetailedOutput)
+            {
+                testOutput.WriteLine("Reset()");
+            }
         }
 
         public ILogProvider WithProperty(string name, object value)
         {
             props[name] = value;
-            testOutput.WriteLine("WithProperty(name='{0}', value='{1};)", name, value);
+            if (this.DetailedOutput)
+            {
+                testOutput.WriteLine("WithProperty(name='{0}', value='{1};)", name, value);
+            }
             return this;
         }
 
@@ -94,9 +108,15 @@ namespace tests
             {
                 this.Warnings = true;
             }
-
-            testOutput.WriteLine("Write(logName='{0}', level='{1}', message='{2}', ex='{3}')",
+            if (this.DetailedOutput)
+            {
+                testOutput.WriteLine("Write(logName='{0}', level='{1}', message='{2}', ex='{3}')",
                 logName, level, message, ex);
+            }
+            else
+            {
+                testOutput.WriteLine("[{0}] {1};{2}", level.ToString(), message, ex);
+            }
         }
 
         public class LogEntry

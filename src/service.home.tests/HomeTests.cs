@@ -9,13 +9,66 @@ namespace service.home.tests
 {
     public class HomeTest : BaseTest
     {
-        public HomeTest(ITestOutputHelper testOutput) : base(testOutput) { }
+        TestNancyNinjectBootstrapper bs;
+
+        public HomeTest(ITestOutputHelper testOutput) : base(testOutput)
+        {
+            bs = new TestNancyNinjectBootstrapper(this);
+            this.FakeLogger.DetailedOutput = false;
+        }
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            if (disposing)
+            {
+                if (bs != null)
+                {
+                    bs.Dispose();
+                    bs = null;
+                }
+            }
+        }
 
         [Fact]
-        public void SomeTest()
+        public void HomePageTest()
         {
-            var browser = new Browser(new DefaultNancyBootstrapper());
+            var browser = new Browser(bs);
 
+            var result = browser.Get("/", with =>
+            {
+                with.HttpRequest();
+            });
+
+            result.StatusCode.ShouldBe(HttpStatusCode.OK);
+        }
+
+        [Fact]
+        public void HumansInfoTest()
+        {
+            var browser = new Browser(bs);
+
+            var result = browser.Get("/humans", with =>
+            {
+                with.HttpRequest();
+            });
+
+            result.StatusCode.ShouldBe(HttpStatusCode.OK);
+            result.ContentType.ShouldBe("text/plain");
+            result.BodyAsText().ShouldContain("colophon", Case.Insensitive);
+        }
+
+        [Fact]
+        public void NotFoundPageTest()
+        {
+            var browser = new Browser(bs);
+
+            var result = browser.Get("/whereismycar", with =>
+            {
+                with.HttpRequest();
+            });
+
+            result.StatusCode.ShouldBe(HttpStatusCode.NotFound);
         }
     }
 }
