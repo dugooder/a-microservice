@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CoverageSession xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Summary numSequencePoints="0" visitedSequencePoints="0" numBranchPoints="0" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="0" minCyclomaticComplexity="0" visitedClasses="0" numClasses="0" visitedMethods="0" numMethods="0" />
+  <Modules>
+    <Module skippedDueTo="Filter" hash="98-23-0F-C8-CC-3A-21-FE-6F-E0-A9-97-6A-5C-D9-79-8D-83-61-D8">
+      <FullName>C:\Windows\Microsoft.Net\assembly\GAC_64\mscorlib\v4.0_4.0.0.0__b77a5c561934e089\mscorlib.dll</FullName>
+      <ModuleName>mscorlib</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="MissingPdb" hash="C9-73-ED-04-00-C6-51-60-27-F2-A0-0B-90-05-B8-86-6E-DB-6B-00">
+      <FullName>C:\Users\bill\Projects\github\a-microservice\src\packages\xunit.runner.console.2.1.0\tools\xunit.console.exe</FullName>
+      <ModuleName>xunit.console</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="MissingPdb" hash="2C-BE-1B-C3-02-35-ED-A0-CC-7C-AB-BA-F1-C5-8D-DE-79-03-01-9A">
+      <FullName>C:\Users\bill\Projects\github\a-microservice\src\packages\xunit.runner.console.2.1.0\tools\xunit.runner.utility.desktop.dll</FullName>
+      <ModuleName>xunit.runner.utility.desktop</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="MissingPdb" hash="9E-A9-5D-7F-86-82-4D-02-7D-07-AD-C0-17-06-5D-73-8F-1F-28-44">
+      <FullName>C:\Users\bill\Projects\github\a-microservice\src\packages\xunit.runner.console.2.1.0\tools\xunit.abstractions.dll</FullName>
+      <ModuleName>xunit.abstractions</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="6D-E2-C1-DC-D0-43-62-D5-0D-26-7F-96-9C-67-32-F2-C7-1C-04-6F">
+      <FullName>C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Core\v4.0_4.0.0.0__b77a5c561934e089\System.Core.dll</FullName>
+      <ModuleName>System.Core</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="MissingPdb" hash="AA-84-EA-4A-FD-23-17-44-E5-3B-73-2A-3D-B6-0E-17-EE-E1-53-6A">
+      <FullName>C:\Users\bill\Projects\github\a-microservice\src\packages\xunit.runner.console.2.1.0\tools\xunit.runner.reporters.desktop.dll</FullName>
+      <ModuleName>xunit.runner.reporters.desktop</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="4F-21-10-E6-18-64-7D-61-84-1D-01-2E-E8-10-CE-5F-73-21-43-95">
+      <FullName>C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Net.Http\v4.0_4.0.0.0__b03f5f7f11d50a3a\System.Net.Http.dll</FullName>
+      <ModuleName>System.Net.Http</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="14-EE-03-D7-75-4C-A4-7D-7D-56-1B-38-DD-F3-EE-4C-FD-B8-7F-75">
+      <FullName>C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System\v4.0_4.0.0.0__b77a5c561934e089\System.dll</FullName>
+      <ModuleName>System</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="1B-0C-C3-F2-9F-9D-FA-A0-48-C8-1D-B5-D5-A1-D4-7F-CB-CB-94-2F">
+      <FullName>C:\Windows\Microsoft.Net\assembly\GAC_64\System.Web\v4.0_4.0.0.0__b03f5f7f11d50a3a\System.Web.dll</FullName>
+      <ModuleName>System.Web</ModuleName>
+      <Classes />
+    </Module>
+  </Modules>
+</CoverageSession>
