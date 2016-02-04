@@ -96,9 +96,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\common\common.csproj">
+    <ProjectReference Include="..\lib.logging\lib.logging.csproj">
       <Project>{22fb3b3f-5847-4538-9e7a-ef9734aaea59}</Project>
-      <Name>common</Name>
+      <Name>lib.logging</Name>
     </ProjectReference>
     <ProjectReference Include="..\service.health\service.health.csproj">
       <Project>{1a1e973e-bdcf-4aac-886f-18a8cd39bc90}</Project>

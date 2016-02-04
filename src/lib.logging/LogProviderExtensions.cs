@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace common
+namespace lib.logging
 {
     /// <summary>
     ///  Log Provider Extensions makes the log provider class usable.  

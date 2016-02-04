@@ -1,11 +1,12 @@
-﻿using common;
-using Nancy;
+﻿using Nancy;
 using Nancy.Bootstrapper;
 using Nancy.Bootstrappers.Ninject;
 using Ninject;
 
-namespace tests
+namespace common.tests
 {
+    using lib.logging;
+
     public class TestNancyNinjectBootstrapper : NinjectNancyBootstrapper
     {
         readonly BaseTest test; 

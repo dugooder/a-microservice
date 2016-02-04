@@ -8,7 +8,7 @@
     <ProjectGuid>{30CB58C7-BF2B-472F-964A-F7B220CE6520}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>tests</RootNamespace>
+    <RootNamespace>common.tests</RootNamespace>
     <AssemblyName>amicroservice.common.tests</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -95,9 +95,6 @@
     <Compile Include="BaseTest.cs" />
     <Compile Include="NancyTestingExtensions.cs" />
     <Compile Include="FakeDisposableClass.cs" />
-    <Compile Include="FakeLogProvider.cs" />
-    <Compile Include="LogProviderExtentionsTests.cs" />
-    <Compile Include="LogProviderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestNancyNinjectBootstrapper.cs" />
   </ItemGroup>
@@ -108,9 +105,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\common\common.csproj">
+    <ProjectReference Include="..\lib.logging\lib.logging.csproj">
       <Project>{22fb3b3f-5847-4538-9e7a-ef9734aaea59}</Project>
-      <Name>common</Name>
+      <Name>lib.logging</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,6 @@
-﻿namespace common
+﻿namespace lib.logging
 {
-    public sealed class CommonNinjectModule : Ninject.Modules.NinjectModule
+    public sealed class LibLoggingNinjectModule : Ninject.Modules.NinjectModule
     {
         public override void Load()
         {

@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>service.home</RootNamespace>
-    <AssemblyName>amicroservice.home</AssemblyName>
+    <AssemblyName>amicroservice.service.home</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
@@ -64,9 +64,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\common\common.csproj">
+    <ProjectReference Include="..\lib.logging\lib.logging.csproj">
       <Project>{22fb3b3f-5847-4538-9e7a-ef9734aaea59}</Project>
-      <Name>common</Name>
+      <Name>lib.logging</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

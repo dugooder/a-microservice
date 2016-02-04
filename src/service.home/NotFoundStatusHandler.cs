@@ -5,6 +5,7 @@ using Nancy.ViewEngines;
 
 namespace service.home
 {
+    
     public class NotFoundStatusHandler : IStatusCodeHandler
     {
         private IViewRenderer viewRenderer;

@@ -7,8 +7,8 @@
     <ProjectGuid>{22FB3B3F-5847-4538-9E7A-EF9734AAEA59}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>common</RootNamespace>
-    <AssemblyName>amicroservice.common</AssemblyName>
+    <RootNamespace>lib.logging</RootNamespace>
+    <AssemblyName>amicroservice.lib.logging</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -49,7 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommonNinjectModule.cs" />
+    <Compile Include="LibLoggingNinjectModule.cs" />
     <Compile Include="ILogProvider.cs" />
     <Compile Include="LogProvider.cs" />
     <Compile Include="LogProviderExtensions.cs" />

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace tests
+namespace common.tests
 {
     public sealed class FakeDisposableClass : IDisposable
     {

@@ -1,15 +1,18 @@
 ﻿using System;
 using Xunit;
 using Xunit.Abstractions;
-using common;
 
-namespace tests
+namespace lib.logging.tests
 {
+    using common.tests;
+
     public class LogProviderExtentionsTests : BaseTest
     {
-        public LogProviderExtentionsTests(ITestOutputHelper output) 
+        FakeLogProvider logger; 
+        public LogProviderExtentionsTests(ITestOutputHelper output)  
             : base(output) {
-            this.FakeLogger.DetailedOutput = true;
+            this.logger = this.FakeLogger as FakeLogProvider;
+            this.logger.DetailedOutput = true;
         }
 
         [Fact]
@@ -33,8 +36,8 @@ namespace tests
         {
             DuplicateWaitObjectException ex = new DuplicateWaitObjectException("dog");
             this.FakeLogger.WithLogLevel(LogLevel.Error).WriteGeneralException(ex);
-            Assert.Equal(ex, this.FakeLogger.LastLogEntry.Exception);
-            Assert.Equal(LogLevel.Error, this.FakeLogger.LastLogEntry.LogLevel);
+            Assert.Equal(ex, logger.LastLogEntry.Exception);
+            Assert.Equal(LogLevel.Error, logger.LastLogEntry.LogLevel);
         }
 
         [Fact]
@@ -42,8 +45,8 @@ namespace tests
         {
             string msg = "Dogs rule! Cats drool!";
             this.FakeLogger.WriteMessage(msg);
-            Assert.Equal(msg, this.FakeLogger.LastLogEntry.Message);
-            Assert.Equal(LogLevel.Unknown, this.FakeLogger.LastLogEntry.LogLevel);
+            Assert.Equal(msg, logger.LastLogEntry.Message);
+            Assert.Equal(LogLevel.Unknown, logger.LastLogEntry.LogLevel);
         }
 
         [Fact]
@@ -52,9 +55,9 @@ namespace tests
             string msg = "Dogs rule! Cats drool!";
             string fmt = "{0} rule! {1} drool!";
             this.FakeLogger.WithLogLevel(LogLevel.Information).WithLogger("Obvious").WriteMessage(fmt, "Dogs", "Cats");
-            Assert.Equal(msg, this.FakeLogger.LastLogEntry.Message);
-            Assert.Equal(LogLevel.Information, this.FakeLogger.LastLogEntry.LogLevel);
-            Assert.Equal("Obvious", this.FakeLogger.LastLogEntry.LogName);
+            Assert.Equal(msg, logger.LastLogEntry.Message);
+            Assert.Equal(LogLevel.Information, logger.LastLogEntry.LogLevel);
+            Assert.Equal("Obvious", logger.LastLogEntry.LogName);
         }
 
         [Fact]
@@ -66,7 +69,7 @@ namespace tests
                 .WithProperty("Data2", "Olivia")
                 .WriteProperties();
 
-            Assert.Equal("LogLevel:Warning;Data1:Oliver;Data2:Olivia;", this.FakeLogger.LastLogEntry.Message);
+            Assert.Equal("LogLevel:Warning;Data1:Oliver;Data2:Olivia;", logger.LastLogEntry.Message);
         }
     }
 }

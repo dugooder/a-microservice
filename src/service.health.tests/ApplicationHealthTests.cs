@@ -1,7 +1,7 @@
-﻿using tests;
-using Xunit;
+﻿using Xunit;
 using Xunit.Abstractions;
 using Shouldly;
+using common.tests;
 
 namespace service.health.tests
 {

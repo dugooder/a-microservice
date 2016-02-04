@@ -1,10 +1,11 @@
 ﻿using Nancy;
 using Ninject;
-using common;
 using Nancy.Responses;
 
 namespace service.home
 {
+    using lib.logging;
+
     public class HomeNancyModule : NancyModule
     {
         readonly ILogProvider log;

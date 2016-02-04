@@ -1,5 +1,4 @@
-﻿using tests;
-using Xunit;
+﻿using Xunit;
 using Xunit.Abstractions;
 using Shouldly;
 using Nancy.Testing;
@@ -7,6 +6,8 @@ using Nancy;
 
 namespace service.home.tests
 {
+    using common.tests;
+
     public class HomeTest : BaseTest
     {
         TestNancyNinjectBootstrapper bs;
@@ -14,7 +15,6 @@ namespace service.home.tests
         public HomeTest(ITestOutputHelper testOutput) : base(testOutput)
         {
             bs = new TestNancyNinjectBootstrapper(this);
-            this.FakeLogger.DetailedOutput = false;
         }
         protected override void Dispose(bool disposing)
         {

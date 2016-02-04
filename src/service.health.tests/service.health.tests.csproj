@@ -82,9 +82,13 @@
       <Project>{30cb58c7-bf2b-472f-964a-f7b220ce6520}</Project>
       <Name>common.tests</Name>
     </ProjectReference>
-    <ProjectReference Include="..\common\common.csproj">
+    <ProjectReference Include="..\lib.logging\lib.logging.csproj">
       <Project>{22fb3b3f-5847-4538-9e7a-ef9734aaea59}</Project>
-      <Name>common</Name>
+      <Name>lib.logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\lib.logging.tests\lib.logging.tests.csproj">
+      <Project>{d5ebe89a-0157-4053-b086-352d226d7e01}</Project>
+      <Name>lib.logging.tests</Name>
     </ProjectReference>
     <ProjectReference Include="..\service.health\service.health.csproj">
       <Project>{1a1e973e-bdcf-4aac-886f-18a8cd39bc90}</Project>

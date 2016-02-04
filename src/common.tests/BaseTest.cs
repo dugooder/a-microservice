@@ -2,24 +2,27 @@
 using Ninject;
 using Xunit.Abstractions;
 
-namespace tests
+
+namespace common.tests
 {
+    using lib.logging;
+
     public abstract class BaseTest : IDisposable
     {
-        internal protected FakeLogProvider FakeLogger;
+        internal protected ILogProvider FakeLogger;
         internal protected ITestOutputHelper TestOutputHelper;
         internal protected IKernel Kernel;
 
         protected BaseTest(ITestOutputHelper output)
         {
             this.TestOutputHelper = output;
-
-            FakeLogger = new FakeLogProvider(output);
-
             StandardKernel stdKernel = new Ninject.StandardKernel();
 
-            stdKernel.Load("amicroservice.*.dll");
-            
+            stdKernel.Load("amicroservice*.dll");
+
+            FakeLogger = stdKernel.Get<ILogProvider>("FakeLogger", 
+                new Ninject.Parameters.ConstructorArgument("testOutputHelper", output));
+
             this.Kernel = stdKernel;
         }
 

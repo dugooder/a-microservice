@@ -1,10 +1,11 @@
 ﻿using System;
-using common;
 using Nancy.Hosting.Self;
 using Ninject;
 
 namespace service
 {
+    using lib.logging;
+
     public sealed class Service : IDisposable
     {
         readonly Uri uri;

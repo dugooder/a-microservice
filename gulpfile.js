@@ -11,10 +11,10 @@ var gulp = require("gulp"),
     runseq = require("gulp-run-sequence"),
     colors = require("colors/safe");
 
-var projects = ["common", "service", "service.health", "service.home"];
-var projectsWithTests = ["common", "service.health", "service.home"];
+var projects = [ "lib.io", "lib.logging", "service.host", "service.health", "service.home"];
+var projectsWithTests = ["lib.logging", "service.health", "service.home"];
 
-var  pkg = require("./package.json"),
+var pkg = require("./package.json"),
     srcDir = "src/",
     buildFolder = "build/",
     testsSuffix = ".tests",
@@ -106,7 +106,7 @@ gulp.task("test", ["compile"], function () {
 });
 
 gulp.task("package", function () {
-     var projectsToPack = [];
+    var projectsToPack = [];
 
     for (var i = 0; i < projects.length; i++) {
         var p = projects[i];
@@ -116,7 +116,7 @@ gulp.task("package", function () {
     }
 
     console.log(projectsToPack);
-      
+
     return gulp.src(projectsToPack)
         .pipe(gulp.dest(buildFolder));
 });

@@ -1,10 +1,11 @@
 ﻿using System;
-using common;
 using Nancy;
 using Ninject;
 
 namespace service.health
 {
+    using lib.logging;
+
     public class HealthNancyModule : NancyModule
     {
         readonly ILogProvider log;

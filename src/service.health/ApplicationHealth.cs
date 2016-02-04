@@ -1,7 +1,6 @@
-﻿using common;
-
-namespace service.health
+﻿namespace service.health
 {
+    using lib.logging;
     public class ApplicationHealth
     {
         readonly ILogProvider log;

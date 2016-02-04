@@ -1,6 +1,6 @@
 ﻿using Nancy.Testing;
 
-namespace tests
+namespace common.tests
 {
     public static class NancyTestingExtensions
     {
