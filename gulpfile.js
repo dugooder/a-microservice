@@ -11,8 +11,12 @@ var gulp = require("gulp"),
     runseq = require("gulp-run-sequence"),
     colors = require("colors/safe");
 
-var projects = [ "lib.io", "lib.logging", "service.host", "service.health", "service.home"];
-var projectsWithTests = ["lib.logging", "service.health", "service.home"];
+var projects = [ "lib.io", "lib.logging", 
+  "service.host", "service.health", "service.home", 
+  "lib.repos.common", "lib.repos"];
+
+var projectsWithTests = ["lib.logging", "service.health", 
+  "service.home", "lib.repos.common", "lib.repos"];
 
 var pkg = require("./package.json"),
     srcDir = "src/",
