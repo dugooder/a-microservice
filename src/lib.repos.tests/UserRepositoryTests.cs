@@ -23,7 +23,7 @@ namespace lib.repos.tests
             User u1 = userRepo.GetUser("oliver", "olivia_is_my_hero");
             Assert.NotNull(u1);
             u1.UserName.ShouldEqual("oliver");
-            u1.HasClaim(HttpMethod.Get, new Uri("http://localhost/food"));
+            u1.HasClaim(HttpMethod.Get, new Uri("http://localhost/food")).ShouldBeTrue();
         }
     }
 }
