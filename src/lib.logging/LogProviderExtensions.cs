@@ -28,6 +28,11 @@ namespace lib.logging
             return provider;
         }
 
+        public static ILogProvider If(this ILogProvider provider, bool logIfTrueFlag)
+        {
+            return logIfTrueFlag ? provider : new SkipLogProvider();
+        }
+
         public static void WriteGeneralException(this ILogProvider provider, Exception ex)
         {
             provider.Write(getLogName(provider), getLogLevel(provider), null, ex);
@@ -50,19 +55,19 @@ namespace lib.logging
             provider.Write(getLogName(provider), getLogLevel(provider), convertPropertiestoString(provider), null);
         }
 
-        private static string getLogName(ILogProvider provider)
+        static string getLogName(ILogProvider provider)
         {
             return (string) provider.GetPropertyValue(
                 PropertyKeyLogName, AppDomain.CurrentDomain.FriendlyName);
         }
 
-        private static LogLevel getLogLevel(ILogProvider provider)
+        static LogLevel getLogLevel(ILogProvider provider)
         {
             return (LogLevel) provider.GetPropertyValue(
                 PropertyKeyLogLevel, LogLevel.Unknown);
         }
 
-        private static string convertPropertiestoString(ILogProvider provider)
+        static string convertPropertiestoString(ILogProvider provider)
         {
             StringBuilder result = new StringBuilder();
 

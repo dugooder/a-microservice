@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace lib.repos.common
 {
-    public interface IUserRepository
+    public interface IUserRepository : IRepository<User, long>, IDisposable
     {
-        User GetUser(string userName, string userPass);
+        User GetByUserName(string userName);
     }
 }

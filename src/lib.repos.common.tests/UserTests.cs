@@ -12,10 +12,14 @@ namespace lib.repos.common.tests
         User testUser;
         public UserTests()
         {
-            testUser = new User("dog",
-                new UserClaim(HttpMethod.Get, new Uri("http://localhost/dogwalking")),
-                new UserClaim(HttpMethod.Post, new Uri("http://localhost/dogwalking"))
-                );
+            // Example service URLs
+            // http://localhost/dog/{id}
+            // https://localhost/dog/{id}/schedule 
+            // http://localhost:9000/cat?name={name}
+            testUser = new User("dog", "bone",
+               @"^GET:http(s)?:\/\/.*\/dog\/\d.$",
+               @"^GET:http(s)?:\/\/.*\/dog\/\d.\/schedule(\/\d.)?$",
+               @"^POST:http(s)?:\/\/.*\/cat\?name=.+$");
         }
 
         [Fact]
@@ -23,20 +27,32 @@ namespace lib.repos.common.tests
         {
             testUser.UserName.Equals("dog");
 
+            testUser.Password.Equals("bone");
+
             Assert.NotNull(testUser.Claims);
 
-            testUser.Claims.Count().ShouldEqual(2);
-            testUser.AddClaim(new UserClaim(HttpMethod.Delete, new Uri("http://localhost/fleas")));
+            int currClaims = testUser.Claims.Count() ;
 
-            testUser.Claims.Count().ShouldEqual(3);
+            testUser.Claims.Add("DELETE:http://localhost/fleas");
+
+            testUser.Claims.Count().ShouldEqual(currClaims + 1);
         }
 
+        //[Fact]
+        //public void TestHasClaim()
+        //{
+        //    testUser.HasMatchingClaim("GET", "http://localhost/dog/12").ShouldBeTrue();
+        //    testUser.HasMatchingClaim("GET", "hTTps://LOCAlhosT:9000/DOG/12").ShouldBeTrue();
+        //    testUser.HasMatchingClaim("GET", "http://localhost/dog/12/aaa").ShouldBeFalse();
+        //    testUser.HasMatchingClaim("POST", "http://localhost/dog/12").ShouldBeFalse();
+        //    testUser.HasMatchingClaim("GET", "http://localhost/dog/12/").ShouldBeFalse();
+        //}
+
         [Fact]
-        public void TestHasClaim()
+        public void IsNewTest()
         {
-            testUser.HasClaim(HttpMethod.Get, new Uri("http://localhost/dogwalking")).ShouldEqual(true);
-            testUser.HasClaim(HttpMethod.Get, new Uri("http://localhost/catwalking")).ShouldEqual(false);
-            testUser.HasClaim(HttpMethod.Delete, new Uri("http://localhost/dogwalking")).ShouldEqual(false);
+            User user = new User();
+            user.IsNew().ShouldBeTrue();
         }
     }
 }

@@ -1,47 +1,47 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using Nancy.Security;
 
 namespace lib.repos.common
 {
-    public class User
+    public class User  : Nancy.Security.IUserIdentity
     {
-        List<UserClaim> claims;
-        public IEnumerable<UserClaim> Claims
+        List<string> Claims_;
+        
+        public long Id { get; set; }
+        public string UserName { get; set; }
+        public string Password { get; set; }
+        public List<string> Claims
         {
             get
             {
-                return claims;
-            }
-
-        }
-        public string UserName { get; protected set; }
-
-        public User(string userName, params UserClaim[] claims)
-        {
-            this.claims = new List<UserClaim>();
-            this.UserName = userName.Clone() as string;
-            for (int i = 0; i < claims.Length; i++)
-            {
-                this.claims.Add(claims[i]);
+                if (Claims_ == null)
+                {
+                    Claims_ = new List<string>();
+                }
+                return Claims_;
             }
         }
 
-        public bool HasClaim(HttpMethod method, Uri url)
+        IEnumerable<string> IUserIdentity.Claims
         {
-            return claims.Find(delegate (UserClaim c)
+            get
             {
-                return method == c.Method &&
-                       url == c.Url;
-            }) != null;
+                return Claims;
+            }
         }
 
-        public void AddClaim(UserClaim claim)
+        public bool IsNew()
         {
-            claims.Add(claim);
+            return this.Id == default(int);
         }
+
+        public User () { }
+        public User(string userName, string password, params string[] claim)
+        {
+            this.UserName = userName;
+            this.Password = password;
+            this.Claims.AddRange(claim);
+        }
+
     }
 }

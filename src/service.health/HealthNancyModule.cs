@@ -1,58 +1,52 @@
 ﻿using System;
 using Nancy;
 using Ninject;
-
+using Nancy.Security;
 namespace service.health
 {
+    using lib;
     using lib.logging;
 
-    public class HealthNancyModule : NancyModule
+    public sealed class HealthNancyModule : NancyModule
     {
         readonly ILogProvider log;
+        readonly IApplicationHealthChecker healthChecker;
 
         [Inject]
-        public HealthNancyModule(ILogProvider log) : base("/health")
+        public HealthNancyModule(ILogProvider log, IApplicationHealthChecker checker) : base("/health")
         {
+            // Make a module secure by using the below functions
+            //this.RequiresHttps();
+            //this.RequiresAuthentication();
+            //this.RequireClaimOnUrl();  // To authorized make sure "^GET:http(s)?:\/\/.*\/health(\/)?$" is a claim.
+
             this.log = log;
+            this.healthChecker = checker;
 
-            using (log.PushContextInfo("healthcheck"))
+            Get["/"] = parameters =>
             {
-                //ie. http://localhost:9000/health/details
-                Get["/details"] = parameters =>
-            {
-                ApplicationHealth appHealth = new ApplicationHealth(log);
-                return View["details", appHealth];
-
-            };
-
-                Get["/"] = parameters =>
+                using (log.PushContextInfo("healthcheck"))
                 {
-
+                    bool isHealthy = false;
                     try
                     {
-                        ApplicationHealth appHealth = new ApplicationHealth(log);
-                        if (appHealth.IsHealthy())
-                        {
-                            return Response
-                            .AsText("OK")
-                            .WithStatusCode(HttpStatusCode.OK);
-                        }
-                        else
-                        {
-                            return Response
-                            .AsText("Not Healthy")
-                            .WithStatusCode(HttpStatusCode.ServiceUnavailable);
-                        }
+                        isHealthy = this.healthChecker.IsHealthy();
                     }
                     catch (Exception e)
                     {
-                        return Response
-                        .AsText(e.Message)
-                        .WithStatusCode(HttpStatusCode.InternalServerError);
+                        isHealthy = false;
+                        log.WithLogLevel(LogLevel.Error).WriteGeneralException(e);
                     }
-                };
-            }
 
+                    HttpStatusCode statusCode = isHealthy ? HttpStatusCode.OK : HttpStatusCode.ServiceUnavailable;
+
+                    return Response.AsText(statusCode.ToString())
+                                   .WithStatusCode(statusCode)
+                                   .WithContentType("text/plain")
+                                   .WithHeader("Content-Disposition", "inline")
+                                   .WithHeader("Cache-Control", "no-cache");
+                }
+            };
         }
     }
 }

@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Ninject;
-using Ninject.Modules;
-
+﻿using Ninject.Modules;
 namespace lib.repos
 {
     using lib.repos.common;
+    using lib.repos.SQLite;
 
     public class LibReposNinjectModule : NinjectModule
     {
         public override void Load()
         {
+            Bind<IRepositoryInitializer>().To<SQLiteRepositoryInitializer>().InSingletonScope();
+
             Bind<IUserRepository>().To<UserRepository>();
         }
     }

@@ -11,12 +11,14 @@ var gulp = require("gulp"),
     runseq = require("gulp-run-sequence"),
     colors = require("colors/safe");
 
-var projects = [ "lib.io", "lib.logging", 
-  "service.host", "service.health", "service.home", 
-  "lib.repos.common", "lib.repos"];
+var projects = [ "lib.io", "lib.logging",  
+    "lib.repos", "lib.repos.common", 
+    "service.health", "service.home",
+    "service.host" 
+  ];
 
 var projectsWithTests = ["lib.logging", "service.health", 
-  "service.home", "lib.repos.common", "lib.repos"];
+  "service.home", "lib.repos.common", "lib.repos", "lib.repos.common", "lib.repos"];
 
 var pkg = require("./package.json"),
     srcDir = "src/",
@@ -116,9 +118,10 @@ gulp.task("package", function () {
         var p = projects[i];
         projectsToPack.push(srcDir + p +
             "/bin/" + configuration +
-            '/**/*.*');
+            "/**/*.*");
     }
 
+    projectsToPack.push("!/**/*.dll.config");
     console.log(projectsToPack);
 
     return gulp.src(projectsToPack)

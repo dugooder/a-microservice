@@ -1,26 +1,25 @@
 ﻿using Xunit;
 using Xunit.Abstractions;
 using Shouldly;
-using common.tests;
 
+using Ninject;
 namespace service.health.tests
 {
+    using common.tests;
+    using service.health;
+
     public class ApplicationHealthTests : BaseTest
     {
-        public ApplicationHealthTests(ITestOutputHelper testOutput) : base(testOutput) { }
+        IApplicationHealthChecker checker;
+        public ApplicationHealthTests(ITestOutputHelper testOutput) : base(testOutput)
+        {
+            checker = Kernel.Get<IApplicationHealthChecker>();
+        }
 
         [Fact]
         public void IsHealthTest()
         {
-            ApplicationHealth appHealth = new ApplicationHealth(this.FakeLogger);
-            appHealth.IsHealthy().ShouldBe(true);
-        }
-
-        [Fact]
-        public void HealthStatusTest()
-        {
-            ApplicationHealth appHealth = new ApplicationHealth(this.FakeLogger);
-            appHealth.Status.ShouldBe("Bien");
+            checker.IsHealthy().ShouldBe(true);
         }
     }
 }

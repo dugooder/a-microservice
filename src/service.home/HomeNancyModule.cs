@@ -24,9 +24,8 @@ namespace service.home
 
                 Get["/humans"] = parameters =>
                 {
-                    var response = new 
-                        GenericFileResponse("content/humans.txt", "text/plain");
-                    return response.WithStatusCode(HttpStatusCode.OK);
+                    return (new GenericFileResponse("content/humans.txt", "text/plain"))
+                        .WithStatusCode(HttpStatusCode.OK);
                 };
             }
         }

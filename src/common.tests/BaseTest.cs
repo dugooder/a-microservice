@@ -1,7 +1,7 @@
 ﻿using System;
 using Ninject;
 using Xunit.Abstractions;
-
+using System.Linq;
 
 namespace common.tests
 {
@@ -13,20 +13,30 @@ namespace common.tests
         internal protected ITestOutputHelper TestOutputHelper;
         internal protected IKernel Kernel;
 
-        protected BaseTest(ITestOutputHelper output)
+        protected BaseTest(ITestOutputHelper output, bool userFakeLogger = true)
         {
             this.TestOutputHelper = output;
-            StandardKernel stdKernel = new Ninject.StandardKernel();
-
-            stdKernel.Load("amicroservice*.dll");
-
-            FakeLogger = stdKernel.Get<ILogProvider>("FakeLogger", 
-                new Ninject.Parameters.ConstructorArgument("testOutputHelper", output));
-
-            this.Kernel = stdKernel;
+            this.Kernel = new Ninject.StandardKernel();
+            this.Kernel.Load("amicroservice*.dll");
+            if (userFakeLogger)
+            {
+                FakeLogger = this.Kernel.Get<ILogProvider>("FakeLogger",
+                    new Ninject.Parameters.ConstructorArgument("testOutputHelper", output));
+                removeRealLogger();
+            }
         }
 
-        
+        private void removeRealLogger()
+        {
+            var binding = Kernel
+                .GetBindings(typeof(lib.logging.ILogProvider))
+                .FirstOrDefault(b => b.Metadata.Name == null);
+            if (binding != null)
+            {
+                Kernel.RemoveBinding(binding);
+            }
+        }
+
         private bool disposedValue = false; // To detect redundant calls
 
         protected virtual void Dispose(bool disposing)

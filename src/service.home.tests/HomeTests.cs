@@ -38,6 +38,7 @@ namespace service.home.tests
             var result = browser.Get("/", with =>
             {
                 with.HttpRequest();
+                with.BasicAuth("Candied", "Apple");
             });
 
             result.StatusCode.ShouldBe(HttpStatusCode.OK);

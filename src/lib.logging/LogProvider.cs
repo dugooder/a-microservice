@@ -59,12 +59,15 @@ namespace lib.logging
         }
 
         /// <summary>
-        ///Log Context Usage:  
+        /// Use the context in two ways.
         /// 1.  using (IDisposable logctx = log.PushContextInfo("message here") { }
-        /// 2.  Call Push() then Pop().
+        /// 2.  Call Push() try {}  Finally {Pop() }
         ///</summary>
         /// <param name="info">any text you want to appear in the NDC property of the log</param>
-        /// <returns>An object allowing the user of the 'using' statement to enforce poping the value off the context stack. Not the normal IDisposale usage; not about releasing memory</returns>
+        /// <returns>
+        /// An object allowing the user of the 'using' statement to enforce poping the 
+        /// value off the context stack. Not the normal IDisposale usage; not about releasing memory
+        /// </returns>
         public IDisposable PushContextInfo(string info)
         {
             return log4net.NDC.Push(info);
@@ -101,7 +104,7 @@ namespace lib.logging
             Reset();
         }
 
-        private static ILog getLogger(string logName)
+        static ILog getLogger(string logName)
         {
             ILog result = null;
 

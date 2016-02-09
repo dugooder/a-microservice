@@ -105,6 +105,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\lib.io\lib.io.csproj">
+      <Project>{7deb7615-5129-43ab-ae67-0ba3f2c3a3b2}</Project>
+      <Name>lib.io</Name>
+    </ProjectReference>
     <ProjectReference Include="..\lib.logging\lib.logging.csproj">
       <Project>{22fb3b3f-5847-4538-9e7a-ef9734aaea59}</Project>
       <Name>lib.logging</Name>

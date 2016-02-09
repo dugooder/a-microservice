@@ -5,17 +5,17 @@ using System;
 using System.Collections.Generic;
 using Xunit;
 using Xunit.Abstractions;
-
+using System.Linq;
 namespace lib.logging.tests
 {
     using common.tests;
-
+    using Ninject.Planning.Bindings;
     [Collection("Common")]
     public class LogProviderTests : BaseTest
     {
         ILogProvider logger;
 
-        public LogProviderTests(ITestOutputHelper outputHelper) : base(outputHelper)
+        public LogProviderTests(ITestOutputHelper outputHelper) : base(outputHelper, false)
         {
             logger = Kernel.Get<ILogProvider>();
         }

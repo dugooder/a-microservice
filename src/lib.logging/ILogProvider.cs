@@ -3,15 +3,6 @@ using System.Collections.Generic;
 
 namespace lib.logging
 {
-    public enum LogLevel
-    {
-        Unknown,
-        Debug,
-        Information,
-        Warning,
-        Error
-    }
-
     public interface ILogProvider
     {
         Dictionary<string, object> Properties { get; }

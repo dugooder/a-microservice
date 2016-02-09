@@ -5,7 +5,7 @@ namespace service.health
     {
         public override void Load()
         {
-            //TODO: Is this needed. Remove later if not.
+            Kernel.Bind<IApplicationHealthChecker>().To<ApplicationHealthChecker>();
         }
     }
 }

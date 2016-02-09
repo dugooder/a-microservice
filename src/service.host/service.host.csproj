@@ -70,6 +70,10 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite, Version=1.0.99.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.99.0\lib\net451\System.Data.SQLite.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
       <Private>True</Private>
@@ -96,9 +100,21 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\lib.io\lib.io.csproj">
+      <Project>{7deb7615-5129-43ab-ae67-0ba3f2c3a3b2}</Project>
+      <Name>lib.io</Name>
+    </ProjectReference>
     <ProjectReference Include="..\lib.logging\lib.logging.csproj">
       <Project>{22fb3b3f-5847-4538-9e7a-ef9734aaea59}</Project>
       <Name>lib.logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\lib.repos.common\lib.repos.common.csproj">
+      <Project>{ab0af1d0-b059-4f2a-988f-fb1160d6f007}</Project>
+      <Name>lib.repos.common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\lib.repos\lib.repos.csproj">
+      <Project>{d0ac967a-8fb9-4ae0-934f-db83e55cb6b6}</Project>
+      <Name>lib.repos</Name>
     </ProjectReference>
     <ProjectReference Include="..\service.health\service.health.csproj">
       <Project>{1a1e973e-bdcf-4aac-886f-18a8cd39bc90}</Project>
@@ -116,7 +132,9 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Nancy.Viewengines.Razor.1.4.3\build\Nancy.ViewEngines.Razor.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Nancy.Viewengines.Razor.1.4.3\build\Nancy.ViewEngines.Razor.targets'))" />
+    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.99.0\build\net451\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.99.0\build\net451\System.Data.SQLite.Core.targets'))" />
   </Target>
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.99.0\build\net451\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.99.0\build\net451\System.Data.SQLite.Core.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

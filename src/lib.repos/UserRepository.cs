@@ -1,51 +1,197 @@
-﻿using System;
+﻿using Ninject;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Ninject;
 
 namespace lib.repos
 {
     using lib.logging;
     using lib.repos.common;
-    using System.Net.Http;
-    internal class UserRepository : BaseRepository, IUserRepository
+
+    internal sealed class UserRepository : BaseRepository, IUserRepository
     {
         [Inject]
         public UserRepository(ILogProvider log) : base(log) { }
 
-        public User GetUser(string userName, string userPass)
+        public User Create(User entity)
         {
-            User result = null;
+            Context.UseTransaction(true);
 
-            Log.WithLogLevel(LogLevel.Information).WriteMessage("Getting user {0}", userName);
-
-            List<User> userList = loadDummyUsers();
-            foreach (User user in userList)
+            try
             {
-                if (string.CompareOrdinal(user.UserName, userName) == 0)
-                {
-                    result = user;
-                }
-            }
+                entity.Id =
+                    Context.Sql(SQL.Create_User)
+                    .Parameter("UserName", entity.UserName)
+                    .Parameter("Password", entity.Password)
+                    .ExecuteReturnLastId<long>("id");
 
-            return result;
+                foreach (string Claim in entity.Claims)
+                {
+                    int rows = Context.Sql(SQL.Create_Claim)
+                        .Parameter("UserName", entity.UserName)
+                        .Parameter("Claim", Claim)
+                        .Execute();
+                    if (rows < 1)
+                    {
+                        throw new DataException("Insert into User Claims failed");
+                    }
+                }
+
+                Context.Commit();
+
+                return entity;
+            }
+            catch
+            {
+                Context.Rollback();
+                throw;
+            }
+            finally
+            {
+                Context.UseTransaction(false);
+            }
         }
-        
-        // This is a template afterall
-        List<User> loadDummyUsers()
+
+        public IEnumerable<User> Read()
         {
-            List<User> result = new List<User>(); 
-            User u1 = new User("oliver",
-                new UserClaim(HttpMethod.Get, new Uri("http://localhost/food")),
-                new UserClaim(HttpMethod.Post, new Uri("http://localhost/food")));
-            result.Add(u1);
-            User u2 = new User("laura",
-                new UserClaim(HttpMethod.Get, new Uri("http://localhost/shop")),
-                new UserClaim(HttpMethod.Post, new Uri("http://localhost/shop")));
-            result.Add(u2);
-            return result;
+            Context.UseSharedConnection(true);
+
+            try
+            {
+                List<User> result = Context
+                    .Sql(SQL.Read_All_Users)
+                    .QueryMany<User>(delegate (User user, dynamic row)
+                    {
+                        user.Id = row.id;
+                        user.Password = row.password;
+                        user.UserName = row.username;
+                        List<string> claims = Context
+                            .Sql(SQL.Read_Claims_For_User)
+                            .Parameter("UserName", user.UserName)
+                            .QueryMany<string>();
+                        user.Claims.AddRange(claims);
+                    });
+
+                return result;
+            }
+            finally
+            {
+                Context.UseSharedConnection(false);
+            }
         }
+
+        public User Update(User entity)
+        {
+            // start transaction 
+            Context.UseTransaction(true);
+
+            try
+            {
+
+                // update user 
+                int updatedCnt =
+                    Context
+                    .Sql(SQL.Update_User)
+                    .Parameter("UserName", entity.UserName)
+                    .Parameter("Password", entity.Password)
+                    .Parameter("Id", entity.Id)
+                    .Execute();
+
+                // delete all claims 
+                int delCnt =
+                    Context
+                    .Sql(SQL.Delete_All_User_Claims)
+                    .Parameter("UserName", entity.UserName)
+                    .Execute();
+
+                // add current set of claims
+                int addedCnt = 0;
+                foreach (string claim in entity.Claims)
+                {
+                    addedCnt +=
+                        Context.Sql(SQL.Create_Claim)
+                         .Parameter("UserName", entity.UserName)
+                         .Parameter("Claim", claim)
+                         .Execute();
+                }
+
+                // compoleted transaction 
+                Context.Commit();
+
+                // return updated user
+                return entity;
+            }
+            catch
+            {
+                Context.Rollback();
+                throw;
+            }
+            finally
+            {
+                Context.UseTransaction(false);
+            }
+        }
+
+        public bool Delete(User entity)
+        {
+            Context.UseTransaction(true);
+
+            try
+            {
+                int cnt = Context.Sql(SQL.Delete_Claim)
+                    .Parameter("UserName", entity.UserName)
+                    .Execute();
+
+                cnt += Context.Sql(SQL.Delete_User)
+                    .Parameter("UserName", entity.UserName)
+                    .Execute();
+
+                Context.Commit();
+
+                return cnt > 0;
+            }
+            catch
+            {
+                Context.Rollback();
+                throw;
+            }
+            finally
+            {
+                Context.UseTransaction(false);
+            }
+        }
+
+        public User GetByUserName(string userName)
+        {
+
+            Context.UseSharedConnection(true);
+
+            try
+            {
+                User result = Context
+                    .Sql(SQL.Read_User_By_UserName)
+                    .Parameter("UserName", userName)
+                    .QueryMany<User>(delegate (User user, dynamic row)
+                    {
+                        user.Id = row.id;
+                        user.Password = row.password;
+                        user.UserName = row.username;
+                        List<string> claims = Context
+                            .Sql(SQL.Read_Claims_For_User)
+                            .Parameter("UserName", user.UserName)
+                            .QueryMany<string>();
+                        user.Claims.AddRange(claims);
+                    }).FirstOrDefault();
+
+                return result;
+            }
+            finally
+            {
+                Context.UseSharedConnection(false);
+            }
+        }
+
+   
     }
 }

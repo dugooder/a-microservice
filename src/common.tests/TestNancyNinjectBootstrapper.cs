@@ -5,8 +5,9 @@ using Ninject;
 
 namespace common.tests
 {
+    using lib;
     using lib.logging;
-
+    
     public class TestNancyNinjectBootstrapper : NinjectNancyBootstrapper
     {
         readonly BaseTest test; 
