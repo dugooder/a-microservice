@@ -1,7 +1,8 @@
 ﻿using Xunit;
 using Xunit.Abstractions;
 using Shouldly;
-
+using Nancy;
+using Nancy.Testing;
 using Ninject;
 namespace service.health.tests
 {
@@ -10,16 +11,25 @@ namespace service.health.tests
 
     public class ApplicationHealthTests : BaseTest
     {
-        IApplicationHealthChecker checker;
+        TestNancyNinjectBootstrapper bs;
+
         public ApplicationHealthTests(ITestOutputHelper testOutput) : base(testOutput)
         {
-            checker = Kernel.Get<IApplicationHealthChecker>();
+            bs = new TestNancyNinjectBootstrapper(this);
         }
 
         [Fact]
         public void IsHealthTest()
         {
-            checker.IsHealthy().ShouldBe(true);
+            var browser = new Browser(bs);
+
+            var result = browser.Get("/health", with =>
+            {
+                with.HttpRequest();
+                with.BasicAuth("NextCheckME", "IamOpenToWorld");
+            });
+
+            result.StatusCode.ShouldBe(HttpStatusCode.OK);
         }
     }
 }
