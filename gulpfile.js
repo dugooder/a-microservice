@@ -41,9 +41,8 @@ gulp.task( "nuget-download", function( done ) {
     }
 } );
 
-gulp.task( "nuget-restore", [ "nuget-download" ], function() {
-    return shell.task( [ "nuget restore src/" + pkg.name + ".sln " ] );
-} );
+gulp.task( "nuget-restore", [ "nuget-download" ],
+     shell.task( [ "nuget restore src/" + pkg.name + ".sln " ] ) );
 
 gulp.task( "info", function() {
     console.log( "Building version:" + pkg.version );
